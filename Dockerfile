@@ -10,7 +10,6 @@ WORKDIR /app
 # Install deps
 RUN apk update --no-cache && apk add pkgconf openssl-dev gcc libc-dev
 
-
 # Copy the source code to the container
 COPY . .
 
@@ -28,9 +27,6 @@ USER 65532:65532
 # Copy the binary from the previous stage
 COPY --from=build /go/bin/chatsapi /go/bin/chatsapi
 
-COPY --from=build /lib/libssl.so.1.1        /lib/libssl.so.1.1
-COPY --from=build /lib/libcrypto.so.1.1     /lib/libcrypto.so.1.1
-COPY --from=build /lib/ld-musl-x86_64.so.1  /lib/ld-musl-x86_64.so.1
 
 # Expose the port that the application will listen on
 EXPOSE ${AppListen}
