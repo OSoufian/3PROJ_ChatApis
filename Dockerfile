@@ -27,7 +27,7 @@ USER 65532:65532
 # Copy the binary from the previous stage
 COPY --from=build /go/bin/chatsapi /go/bin/chatsapi
 
-COPY --from=builder /lib/libssl.so.1.1       /lib/libssl.so.1.1
+COPY --from=builder /lib       /lib
 
 
 
