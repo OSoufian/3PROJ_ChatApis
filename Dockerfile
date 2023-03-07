@@ -28,8 +28,6 @@ USER 65532:65532
 COPY --from=build /go/bin/chatsapi /go/bin/chatsapi
 
 COPY --from=builder /lib/libssl.so.1.1       /lib/libssl.so.1.1
-COPY --from=builder /lib/libcrypto.so.1.1     /lib/libcrypto.so.1.1
-COPY --from=builder /lib/ld-musl-x86_64.so.1  /lib/ld-musl-x86_64.so.1
 
 
 
