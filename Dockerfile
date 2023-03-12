@@ -17,7 +17,7 @@ ENV GO111MODULE=on
 RUN go mod download
 
 # Build the binary
-RUN GOOS=linux GOARCH=amd64 go build -tags static -o /go/bin/chatsapi .
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -installsuffix 'static' -o /go/bin/chatsapi .
 
 # Use a lightweight image for the final stage
 FROM ${DISTROLESS_IMAGE}
@@ -26,9 +26,11 @@ USER 65532:65532
 
 # Copy the binary from the previous stage
 COPY --from=build /go/bin/chatsapi /go/bin/chatsapi
+
 COPY --from=build /lib/libssl.so.3     /lib/libssl.so.3
 COPY --from=build /lib/libcrypto.so.3     /lib/libcrypto.so.3
 COPY --from=build /lib/ld-musl-x86_64.so.1  /lib/ld-musl-x86_64.so.1
+
 
 
 
