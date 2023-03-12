@@ -1,4 +1,4 @@
-package main
+package controllers
 
 import (
 	"strconv"
@@ -16,6 +16,15 @@ type Message struct {
 var messages = []Message{
 	{ID: 1, Content: "Hello, World!", Created: time.Now()},
 	{ID: 2, Content: "Goodbye, World!", Created: time.Now()},
+}
+
+func ChatsApi(router fiber.Router) {
+	router.Get("/test", func(c *fiber.Ctx) error {
+		return c.JSON(&fiber.Map{"msg": "Hello World"})
+	})
+	router.Get("/:id", getMessage)
+	router.Post("/", createMessage)
+	router.Delete("/:id", deleteMessage)
 }
 
 func getMessage(c *fiber.Ctx) error {
