@@ -1,21 +1,16 @@
 package controllers
 
 import (
+	"chatsapi/internal/domain"
 	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-type Message struct {
-	ID      int       `json:"id"`
-	Content string    `json:"content"`
-	Created time.Time `json:"created"`
-}
-
-var messages = []Message{
-	{ID: 1, Content: "Hello, World!", Created: time.Now()},
-	{ID: 2, Content: "Goodbye, World!", Created: time.Now()},
+var messages = []domain.Message{
+	{Id: 1, Content: "Hello, World!", Created: time.Now()},
+	{Id: 2, Content: "Goodbye, World!", Created: time.Now()},
 }
 
 func ChatsApi(router fiber.Router) {
@@ -37,9 +32,9 @@ func getMessage(c *fiber.Ctx) error {
 	}
 
 	// Find the message with the given ID
-	var message *Message
+	var message *domain.Message
 	for _, m := range messages {
-		if m.ID == id {
+		if m.Id == uint(id) {
 			message = &m
 			break
 		}
@@ -58,7 +53,7 @@ func getMessage(c *fiber.Ctx) error {
 
 func createMessage(c *fiber.Ctx) error {
 	// Parse the request body into a new message
-	var message Message
+	var message domain.Message
 	if err := c.BodyParser(&message); err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "Invalid request payload",
@@ -66,7 +61,7 @@ func createMessage(c *fiber.Ctx) error {
 	}
 
 	// Assign a new ID and creation time to the message
-	message.ID = len(messages) + 1
+	message.Id = uint(len(messages) + 1)
 	message.Created = time.Now()
 
 	// Add the new message to the messages list
@@ -88,7 +83,7 @@ func deleteMessage(c *fiber.Ctx) error {
 	// Find the index of the message with the given ID
 	index := -1
 	for i, m := range messages {
-		if m.ID == id {
+		if m.Id == uint(id) {
 			index = i
 			break
 		}

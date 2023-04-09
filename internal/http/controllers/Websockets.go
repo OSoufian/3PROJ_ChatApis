@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"chatsapi/internal/domain"
 	"encoding/json"
 	"log"
 
@@ -31,7 +32,7 @@ func initWebsocket(c *fiber.Ctx) error {
 			}
 
 			// Parse the message
-			var message Message
+			var message domain.LiveMessage
 			err = json.Unmarshal(msg, &message)
 			if err != nil {
 				log.Printf("json parse error: %v", err)
@@ -55,7 +56,7 @@ func removeConnection(conn *websocket.Conn) {
 	}
 }
 
-func broadcast(message Message) {
+func broadcast(message domain.LiveMessage) {
 	data, err := json.Marshal(message)
 	if err != nil {
 		log.Printf("json encode error: %v", err)
