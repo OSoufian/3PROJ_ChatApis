@@ -20,7 +20,7 @@ type Role struct {
 	ChannelId   int
 	Channel     Channel     `gorm:"foreignKey:ChannelId"`
 	User        []UserModel `gorm:"many2many:user_roles;"`
-	Permission  uint64      `gorm:"type:bigint"`
+	Permission  int64      `gorm:"type:bigint"`
 	Name        string      `gorm:"type:varchar(255);"`
 	Description string      `gorm:"type:varchar(255);"`
 }
@@ -31,7 +31,7 @@ type UserModel struct {
 	Username      string    `gorm:"type:varchar(255);not null"`
 	Email         string    `gorm:"type:varchar(255);"`
 	Password      string    `gorm:"type:varchar(255);"`
-	Permission    uint64    `gorm:"type:bigint"`
+	Permission    int64    `gorm:"type:bigint"`
 	Incredentials string    `gorm:"column:credentials type:text"`
 	ValideAccount bool      `gorm:"type:bool; default false"`
 	Disable       bool      `gorm:"type:bool; default false"`
