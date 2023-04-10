@@ -3,13 +3,7 @@ package domain
 import "time"
 
 type LiveMessage struct {
-	Id      uint   `gorm:"primarykey;autoIncrement;not null"`
-	Content string `gorm:"type:varchar(255);"`
-	VideoId uint   `gorm:"foreignKey:id"`
-	Video   Videos
-	UserId  uint `gorm:"foreignKey:id"`
-	User    UserModel
-	Created time.Time `json:"created"`
+	Message
 }
 
 type Message struct {
@@ -47,7 +41,7 @@ func (msg *Message) GetAll() ([]Message, error) {
 	return results, nil
 }
 
-func (msg *Message) createMessage() error {
+func (msg *Message) CreateMessage() error {
 	tx := Db.Create(msg)
 
 	return tx.Error
@@ -67,27 +61,4 @@ func (msg *LiveMessage) GetById() *LiveMessage {
 		return nil
 	}
 	return msg
-}
-
-func (msg *LiveMessage) GetAll() ([]LiveMessage, error) {
-	var results []LiveMessage
-	err := Db.Find(&results).Error
-	if err != nil {
-		return nil, err
-	}
-	return results, nil
-}
-
-func (msg *LiveMessage) createMessage() error {
-	tx := Db.Create(msg)
-
-	return tx.Error
-}
-
-func (msg *LiveMessage) UpdateMessage() {
-	Db.Save(&msg)
-}
-
-func (msg *LiveMessage) DeletMessage() {
-	Db.Delete(msg)
 }

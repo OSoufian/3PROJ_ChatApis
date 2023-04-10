@@ -14,12 +14,23 @@ var messages = []domain.Message{
 }
 
 func ChatsApi(router fiber.Router) {
-	router.Get("/test", func(c *fiber.Ctx) error {
-		return c.JSON(&fiber.Map{"msg": "Hello World"})
-	})
+	router.Get("/", getMessages)
 	router.Get("/:id", getMessage)
 	router.Post("/", createMessage)
 	router.Delete("/:id", deleteMessage)
+}
+
+// Get All chats
+// @Summary Chat
+// @Description get all chats
+// @Tags Chat
+// @Success 200 {Message} List Chat
+// @Failure 404
+// @Router /chats [get]
+func getMessages(c *fiber.Ctx) error {
+	message := domain.Message{}
+	messages, _ := message.GetAll()
+	return c.JSON(messages)
 }
 
 // Get All chats
