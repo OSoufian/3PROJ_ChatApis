@@ -15,6 +15,13 @@ func WebsocketControllers(router fiber.Router) {
 	router.Get("/", initWebsocket)
 }
 
+// Get All WebSockets
+// @Summary LiveChat
+// @Description init websocket broadcasr
+// @Tags LiveChat
+// @Success 200 {Message} LiveChat
+// @Failure 404
+// @Router /ws [get]
 func initWebsocket(c *fiber.Ctx) error {
 	client := websocket.New(func(c *websocket.Conn) {
 		// Store the new connection

@@ -17,4 +17,53 @@ paths:
       summary: Show the status of server.
       tags:
       - root
+  /chats:
+    get:
+      description: get all chats
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: Message
+        "404":
+          description: Not Found
+      summary: Chat
+      tags:
+      - Chat
+    post:
+      description: get all chats
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: Message
+        "404":
+          description: Not Found
+      summary: Chat
+      tags:
+      - Chat
+  /chats/:id:
+    delete:
+      description: get all chats
+      responses:
+        "201":
+          description: Created
+        "404":
+          description: Not Found
+      summary: Chat
+      tags:
+      - Chat
+  /ws:
+    get:
+      description: init websocket broadcasr
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: Message
+        "404":
+          description: Not Found
+      summary: LiveChat
+      tags:
+      - LiveChat
 swagger: "2.0"

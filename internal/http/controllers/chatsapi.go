@@ -22,6 +22,13 @@ func ChatsApi(router fiber.Router) {
 	router.Delete("/:id", deleteMessage)
 }
 
+// Get All chats
+// @Summary Chat
+// @Description get all chats
+// @Tags Chat
+// @Success 200 {Message} List Chat
+// @Failure 404
+// @Router /chats [get]
 func getMessage(c *fiber.Ctx) error {
 	// Get the ID from the URL parameters
 	id, err := strconv.Atoi(c.Params("id"))
@@ -51,6 +58,13 @@ func getMessage(c *fiber.Ctx) error {
 	return c.JSON(message)
 }
 
+// Get All chats
+// @Summary Chat
+// @Description get all chats
+// @Tags Chat
+// @Success 200 {Message} List Chat
+// @Failure 404
+// @Router /chats [post]
 func createMessage(c *fiber.Ctx) error {
 	// Parse the request body into a new message
 	var message domain.Message
@@ -71,6 +85,13 @@ func createMessage(c *fiber.Ctx) error {
 	return c.JSON(message)
 }
 
+// Get All chats
+// @Summary Chat
+// @Description get all chats
+// @Tags Chat
+// @Success 201
+// @Failure 404
+// @Router /chats/:id [delete]
 func deleteMessage(c *fiber.Ctx) error {
 	// Get the ID from the URL parameters
 	id, err := strconv.Atoi(c.Params("id"))

@@ -27,6 +27,81 @@
                     }
                 }
             }
+        },
+        "/chats": {
+            "get": {
+                "description": "get all chats",
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Chat",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "Message"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "description": "get all chats",
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Chat",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "Message"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/chats/:id": {
+            "delete": {
+                "description": "get all chats",
+                "tags": [
+                    "Chat"
+                ],
+                "summary": "Chat",
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/ws": {
+            "get": {
+                "description": "init websocket broadcasr",
+                "tags": [
+                    "LiveChat"
+                ],
+                "summary": "LiveChat",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "Message"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
         }
     }
 }
