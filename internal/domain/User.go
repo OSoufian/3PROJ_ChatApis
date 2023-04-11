@@ -1,6 +1,10 @@
 package domain
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 var Db *gorm.DB
 
@@ -20,7 +24,7 @@ type Role struct {
 	ChannelId   int
 	Channel     Channel     `gorm:"foreignKey:ChannelId"`
 	User        []UserModel `gorm:"many2many:user_roles;"`
-	Permission  int64      `gorm:"type:bigint"`
+	Permission  int64       `gorm:"type:bigint"`
 	Name        string      `gorm:"type:varchar(255);"`
 	Description string      `gorm:"type:varchar(255);"`
 }
@@ -31,7 +35,7 @@ type UserModel struct {
 	Username      string    `gorm:"type:varchar(255);not null"`
 	Email         string    `gorm:"type:varchar(255);"`
 	Password      string    `gorm:"type:varchar(255);"`
-	Permission    int64    `gorm:"type:bigint"`
+	Permission    int64     `gorm:"type:bigint"`
 	Incredentials string    `gorm:"column:credentials type:text"`
 	ValideAccount bool      `gorm:"type:bool; default false"`
 	Disable       bool      `gorm:"type:bool; default false"`
@@ -40,14 +44,14 @@ type UserModel struct {
 }
 
 type Videos struct {
-	Id           uint   `gorm:"primarykey;autoIncrement;not null"`
-	Name         string `gorm:"type:varchar(255);"`
-	Description  string `gorm:"type:varchar(255);"`
-	Icon         string `gorm:"type:varchar(255);"`
-	VideoURL     string `gorm:"type:varchar(255);"`
-	ChannelId    uint   `gorm:"foreignKey:id"`
-	Channel      Channel
-	CreationDate string `gorm:"type:date;"`
+	Id          uint   `gorm:"primarykey;autoIncrement;not null"`
+	Name        string `gorm:"type:varchar(255);"`
+	Description string `gorm:"type:varchar(255);"`
+	Icon        string `gorm:"type:varchar(255);"`
+	VideoURL    string `gorm:"type:varchar(255);"`
+	ChannelId   uint   `gorm:"foreignKey:id"`
+	Channel     Channel
+	CreatedAt   time.Time `gorm:"type:time without time zone"`
 }
 
 func (user *UserModel) TableName() string {
