@@ -51,7 +51,7 @@ type Videos struct {
 	VideoURL    string `gorm:"type:varchar(255);"`
 	ChannelId   uint   `gorm:"foreignKey:id"`
 	Channel     Channel
-	CreatedAt   time.Time `gorm:"type:time without time zone"`
+	CreatedAt   string `gorm:"type:time without time zone"`
 }
 
 func (user *UserModel) TableName() string {
