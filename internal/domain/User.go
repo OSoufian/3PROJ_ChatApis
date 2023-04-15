@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"time"
 
 	"gorm.io/gorm"
 )
