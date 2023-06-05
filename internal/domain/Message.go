@@ -1,19 +1,19 @@
 package domain
 
-import "time"
+// import "time"
 
 type LiveMessage struct {
 	Message
 }
 
 type Message struct {
-	Id      uint   `gorm:"primarykey;autoIncrement;not null"`
-	Content string `json:"content"`
-	VideoId uint   `gorm:"foreignKey:id"`
+	Id      uint       `gorm:"primarykey;autoIncrement;not null"`
+	Content string     `json:"Content"`
+	VideoId uint       `gorm:"foreignKey:id"`
 	Video   Videos
-	UserId  uint `gorm:"foreignKey:id"`
+	UserId  uint       `gorm:"foreignKey:id"`
 	User    UserModel
-	Created time.Time `json:"created"`
+	Created string     `gorm:"type:time without time zone"`
 }
 
 func (msg *Message) TableName() string {
@@ -32,23 +32,19 @@ func (msg *Message) GetById() *Message {
 	return msg
 }
 
-func (msg *Message) GetAll() ([]Message, error) {
+func (message *Message) GetAll(video int) ([]Message, error) {
 	var results []Message
-	err := Db.Find(&results).Error
+	err := Db.Where("video_id = ?", video).Find(&results).Error
 	if err != nil {
 		return nil, err
 	}
 	return results, nil
 }
 
-func (msg *Message) CreateMessage() error {
+func (msg *Message) Create() error {
 	tx := Db.Create(msg)
 
 	return tx.Error
-}
-
-func (msg *Message) UpdateMessage() {
-	Db.Save(&msg)
 }
 
 func (msg *Message) DeletMessage() {
@@ -61,4 +57,10 @@ func (msg *LiveMessage) GetById() *LiveMessage {
 		return nil
 	}
 	return msg
+}
+
+func (msg *LiveMessage) CreateMessage() error {
+	tx := Db.Create(msg)
+
+	return tx.Error
 }
