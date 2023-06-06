@@ -48,6 +48,8 @@ func (msg *Message) Create() error {
 }
 
 func (msg *Message) DeletMessage() {
+	// Db.Where("id = ?", msg.Id).Find(msg)
+	
 	Db.Delete(msg)
 }
 

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"chatsapi/internal/domain"
 	"time"
-	"log"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -89,7 +88,6 @@ func createMessage(c *fiber.Ctx) error {
 	}
 
 	message.UserId = user.Id
-	// log.Println(user)
 	if user.Icon != "" {
 		message.User.Icon = user.Icon
 	}
@@ -102,10 +100,8 @@ func createMessage(c *fiber.Ctx) error {
 	message.User.Id = user.Id
 	
 	message.VideoId = videoObj.Id
-	// message.Video = *video
 	
 	message.Created = time.Now().Format("2006-01-02 15:04:05")
-	log.Println(*message)
 	message.Create()
 
 	// Return the new message
@@ -122,15 +118,15 @@ func createMessage(c *fiber.Ctx) error {
 func deleteMessage(c *fiber.Ctx) error {
 
 	messageParam := c.Params("MessageId")
-	MessageID, err := strconv.Atoi(messageParam)
+	MessageId, err := strconv.Atoi(messageParam)
 	if err != nil {
 		return c.SendStatus(fiber.ErrBadRequest.Code)
 	}
 	message := domain.Message{}
-	message.Id = MessageId
+	message.Id = uint(MessageId)
 
-	if message.Find() {
-		message.Delete()
+	if message.GetById() != nil{
+		message.DeletMessage()
 	}
 
 	return c.SendStatus(201)
