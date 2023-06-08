@@ -3,8 +3,13 @@ package domain
 // import "time"
 
 type LiveMessage struct {
-	Message
+	Message string `json:"message"`
 }
+
+// type LiveMessage struct {
+// 	Message string `json:"message"`
+// 	VideoId uint   `gorm:"foreignKey:id"`
+// }
 
 type Message struct {
 	Id      uint       `gorm:"primarykey;autoIncrement;not null"`
@@ -53,13 +58,13 @@ func (msg *Message) DeletMessage() {
 	Db.Delete(msg)
 }
 
-func (msg *LiveMessage) GetById() *LiveMessage {
-	tx := Db.Where("id = ?", msg.Id).Find(msg)
-	if tx.RowsAffected == 0 {
-		return nil
-	}
-	return msg
-}
+// func (msg *LiveMessage) GetById() *LiveMessage {
+// 	tx := Db.Where("id = ?", msg.Id).Find(msg)
+// 	if tx.RowsAffected == 0 {
+// 		return nil
+// 	}
+// 	return msg
+// }
 
 func (msg *LiveMessage) CreateMessage() error {
 	tx := Db.Create(msg)
