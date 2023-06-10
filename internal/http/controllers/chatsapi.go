@@ -72,10 +72,6 @@ func createMessage(c *fiber.Ctx) error {
 	}
 
 	videoObj.Id = uint(partial.VideoId)
-	// video, err := videoObj.Get()
-	// if err != nil {
-	// 	return c.SendStatus(fiber.ErrBadGateway.Code)
-	// }
 
 	userObj.Id = uint(partial.UserId)
 	user, err := userObj.Get()

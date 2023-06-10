@@ -1,21 +1,15 @@
 package domain
 
-// import "time"
-
 type LiveMessage struct {
-	Message string `json:"message"`
+	Message   string   `json:"message"`
+	VideoId   uint     `gorm:"foreignKey:id"`
+	Username  string   `gorm:"type:varchar(255);not null"`
 }
-
-// type LiveMessage struct {
-// 	Message string `json:"message"`
-// 	VideoId uint   `gorm:"foreignKey:id"`
-// }
 
 type Message struct {
 	Id      uint       `gorm:"primarykey;autoIncrement;not null"`
 	Content string     `json:"Content"`
 	VideoId uint       `gorm:"foreignKey:id"`
-	Video   Videos
 	UserId  uint       `gorm:"foreignKey:id"`
 	User    UserModel
 	Created string     `gorm:"type:time without time zone"`
@@ -56,18 +50,4 @@ func (msg *Message) DeletMessage() {
 	// Db.Where("id = ?", msg.Id).Find(msg)
 	
 	Db.Delete(msg)
-}
-
-// func (msg *LiveMessage) GetById() *LiveMessage {
-// 	tx := Db.Where("id = ?", msg.Id).Find(msg)
-// 	if tx.RowsAffected == 0 {
-// 		return nil
-// 	}
-// 	return msg
-// }
-
-func (msg *LiveMessage) CreateMessage() error {
-	tx := Db.Create(msg)
-
-	return tx.Error
 }
