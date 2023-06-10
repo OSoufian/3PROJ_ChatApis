@@ -24,6 +24,7 @@ func (p *PartialMessage) Unmarshal(body []byte) error {
 func ChatsApi(router fiber.Router) {
 	router.Get("/", getAllMessages)
 	router.Post("/", createMessage)
+	router.Delete("/user/:userId", deleteUserMessages)
 	router.Delete("/:MessageId", deleteMessage)
 }
 
@@ -125,5 +126,19 @@ func deleteMessage(c *fiber.Ctx) error {
 		message.DeletMessage()
 	}
 
-	return c.SendStatus(201)
+	return c.SendStatus(202)
+}
+
+func deleteUserMessages(c *fiber.Ctx) error {
+
+	messageParam := c.Params("userId")
+	userId, err := strconv.Atoi(messageParam)
+	if err != nil {
+		return c.SendStatus(fiber.ErrBadRequest.Code)
+	}
+	message := domain.Message{}
+
+	message.DeleteAllUserMessages(int(userId))
+
+	return c.SendStatus(202)
 }

@@ -40,6 +40,32 @@ func (message *Message) GetAll(video int) ([]Message, error) {
 	return results, nil
 }
 
+func (message *Message) GetAllUserMessages(user int) ([]Message, error) {
+	var results []Message
+	err := Db.Where("user_id = ?", user).Find(&results).Error
+	if err != nil {
+		return nil, err
+	}
+	return results, nil
+}
+
+func (message *Message) DeleteAllUserMessages(user int) error {
+	// Retrieve all messages of the user
+	var messages []Message
+	if err := Db.Where("user_id = ?", user).Find(&messages).Error; err != nil {
+		return err
+	}
+
+	// Delete each message
+	for _, m := range messages {
+		if err := Db.Delete(&m).Error; err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (msg *Message) Create() error {
 	tx := Db.Create(msg)
 
