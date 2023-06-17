@@ -65,7 +65,7 @@ func Http() *fiber.App {
 	}))
 
 	controllers.WebsocketControllers(app.Group("/ws"))
-	controllers.ChatsApi(app.Group("/chats/messages"))
+	controllers.ChatsApi(app.Group("/comments/messages"))
 
 	return app
 }
