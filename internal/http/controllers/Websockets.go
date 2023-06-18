@@ -23,6 +23,7 @@ var connections []*websocket.Conn
 
 func WebsocketControllers(router fiber.Router) {
 	router.Get("/", initWebsocket)
+	router.Get("/connections", getNumConnections)
 }
 
 // Get All WebSockets
@@ -61,7 +62,17 @@ func initWebsocket(c *fiber.Ctx) error {
 		}
 	})
 
-	return client(c)
+	// Return the number of connections as part of the response
+	numConnections := len(connections)
+	return c.JSON(fiber.Map{
+		"connections": numConnections,
+		"client": client(c),
+	})
+}
+
+func getNumConnections(c *fiber.Ctx) error {
+	numConnections := len(connections)
+	return c.JSON(fiber.Map{"numConnections": numConnections})
 }
 
 func removeConnection(conn *websocket.Conn) {
